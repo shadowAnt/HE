@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/HP.iml" filepath="$PROJECT_DIR$/.idea/HP.iml" />
+      <module fileurl="file://E:/others/HomomorphicPFE/.idea/HomomorphicPFE.iml" filepath="E:/others/HomomorphicPFE/.idea/HomomorphicPFE.iml" />
+    </modules>
+  </component>
+</project>

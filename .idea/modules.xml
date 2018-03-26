@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/HP.iml" filepath="$PROJECT_DIR$/.idea/HP.iml" />
-      <module fileurl="file://E:/others/HomomorphicPFE/.idea/HomomorphicPFE.iml" filepath="E:/others/HomomorphicPFE/.idea/HomomorphicPFE.iml" />
     </modules>
   </component>
 </project>

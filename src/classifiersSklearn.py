@@ -86,10 +86,6 @@ print(classification_report(yt, pred))
 accuracy = neigh.score(Xt, yt)
 print("KNN accuracy",  accuracy*100 , "%")
 
-
-
-
-
 def get_weight():
 	weights = {}
 	weights['child'] = 1997. / y.count('child')

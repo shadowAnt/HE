@@ -26,7 +26,7 @@ src
 
     show.py
         PCA reconstructed = eigenFace.T * faceR(list) + mean_face.T
-        16384*1           = 99*16384.T  *  99*1  + 1*16384.T
+        1*16384           = 99*16384.T  *  1*99  + 16384*1 .T
 
     ImageWithEncryption.py
         从测试集中选一个图片，把99个系数加密解密

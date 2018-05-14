@@ -30,6 +30,7 @@ src
 
     ImageWithEncryption.py
         从测试集中选一个图片，把99个系数加密解密
+        choose an image from data set
 
     faceEuclideanDistance1.py
         takes one face number as input and computes the euclidean distance to all the training faces, then it returns the k nearest ones

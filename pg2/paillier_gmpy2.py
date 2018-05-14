@@ -28,23 +28,20 @@ def generate_keypair(bits):
 def encrypt(pub, plain):
     while True:
         r = mpz_urandomb(rand, pub.bits)
-        if r > 0 & r < pub.n & gcd(r,pub.n)==1:
+        if r > 0 and r < pub.n and gcd(r, pub.n) == 1:
             break
     x = powmod(r, pub.n, pub.n_sq)
-
-    # cipher = (powmod(pub.g, plain, pub.n_sq) * x) % pub.n_sq
-    D = mpz(1)
-    while True:
-        if plain % 2 == 0 and plain != 0:
-            plain = plain / 2
-            pub.g = powmod(pub.g, 2, pub.n_sq)
-        elif plain % 2 == 1:
-            plain = plain - 1
-            D = (D * pub.g) % pub.n_sq
-        elif plain == 0:
-            break
-    cipher = (D * x) % pub.n_sq
+    cipher = (powmod(pub.g, plain, pub.n_sq) * x) % pub.n_sq
     return cipher
+
+#TODO m = (c^l mod n^2 - 1) / n * m mod n
+def decrypt(priv, pub, cipher):
+    x = powmod(cipher, priv.l, pub.n_sq) - 1
+    plain = ((x // pub.n) * priv.m) % pub.n
+    if plain > pub.n/2:
+        plain = plain - pub.n
+    """// 取整除 - 返回商的整数部分"""
+    return plain
 
 #TODO E(m1)E(m2) mod n^2 = E(m1+m2)
 def e_add(pub, a, b):
@@ -60,13 +57,6 @@ def e_add_const(pub, a, n):
 def e_mul_const(pub, a, n):
     """Multiplies an encrypted integer by a constant"""
     return powmod(a, n, pub.n_sq)
-
-#TODO m = (c^l mod n^2 - 1) / n * m mod n
-def decrypt(priv, pub, cipher):
-    x = powmod(cipher, priv.l, pub.n_sq) - 1
-    plain = ((x // pub.n) * priv.m) % pub.n
-    """// 取整除 - 返回商的整数部分"""
-    return plain
 
 #TODO return function's result and runtime
 def timing(f, c=0):
@@ -92,16 +82,30 @@ if __name__ == '__main__':
     t_decrypt = timing(decrypt, 2)
     clockTime_avg = 0
     clockTime_avg1 = 0
-    for i in range(10):
-        cx, clockTime = t_encrypt(pub, i)
-        print('encrypt x=', i)
-        clockTime_avg += clockTime
-        x, clockTime1 = t_decrypt(priv, pub, cx)
-        print('decrypt x=', x)
-        clockTime_avg1 += clockTime1
 
-    print("Average time for generating a prime of length %d: %f ms" % (512, (clockTime_avg*1000/10.)))
-    print("Average time for generating a prime of length %d: %f ms" % (512, (clockTime_avg1*1000/10.)))
+    # c_1 = encrypt(pub, 1)
+    # c_2 = encrypt(pub, 2)
+    # c_2 = c_2 ** 5
+    # ans = c_1 * c_2
+    # m = decrypt(priv, pub, ans)
+    # print(m)
+
+    c_1 = encrypt(pub, 1)
+    c_2 = encrypt(pub, -2)
+    c_3 = e_add(pub, c_1, c_2)
+    m = decrypt(priv, pub, c_3)
+    print(m)
+
+    # for i in range(10):
+    #     cx, clockTime = t_encrypt(pub, i)
+    #     print('encrypt x=', i)
+    #     clockTime_avg += clockTime
+    #     x, clockTime1 = t_decrypt(priv, pub, cx)
+    #     print('decrypt x=', x)
+    #     clockTime_avg1 += clockTime1
+    #
+    # print("Average time for generating a prime of length %d: %f ms" % (512, (clockTime_avg*1000/10.)))
+    # print("Average time for generating a prime of length %d: %f ms" % (512, (clockTime_avg1*1000/10.)))
 
 
     # def encrypt(pub, plain):

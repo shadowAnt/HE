@@ -1,7 +1,9 @@
 import sys
 from time import time
 import numpy as np 
-import re 
+import re
+import matplotlib.pyplot as plt
+import prettyplotlib as ppl
 
 '''
 preprocessing part
@@ -79,20 +81,38 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn import preprocessing
 
 from sklearn.neighbors import KNeighborsClassifier
-neigh = KNeighborsClassifier(n_neighbors=10)
-neigh.fit(X, y)
-pred = neigh.predict(Xt)
-print(classification_report(yt, pred))
-accuracy = neigh.score(Xt, yt)
-print("KNN accuracy",  accuracy*100 , "%")
 
-def get_weight():
-	weights = {}
-	weights['child'] = 1997. / y.count('child')
-	weights['teen'] = 1997. / y.count('teen')
-	weights['adult'] = 1997. / y.count('adult')
-	weights['senior'] = 1997. / y.count('senior')
-	return weights
+k_range = range(1, 31)
+k_score = []
+for k in k_range:
+	neigh = KNeighborsClassifier(n_neighbors = k)
+	neigh.fit(X, y)
+	pred = neigh.predict(Xt)
+	# print(classification_report(yt, pred))
+	accuracy = neigh.score(Xt, yt)
+	print(k, "KNN accuracy",  accuracy*100 , "%")
+	k_score.append(accuracy*100)
+
+k_range = list(k_range)
+plt.plot(k_range, k_score, color="blue", linewidth=2.5, linestyle="-", label="cosine")
+plt.xlabel('value of K for KNN')
+plt.ylabel('accuracy')
+plt.show()
+
+# fig, ax = plt.subplots(1)
+# ppl.bar(ax, k_range, k_score)
+# ax.set_xlabel('value of K for KNN')
+# ax.set_ylabel('accuracy')
+# plt.show()
+# fig.savefig('bar_prettyplotlib_default.png')
+
+# def get_weight():
+# 	weights = {}
+# 	weights['child'] = 1997. / y.count('child')
+# 	weights['teen'] = 1997. / y.count('teen')
+# 	weights['adult'] = 1997. / y.count('adult')
+# 	weights['senior'] = 1997. / y.count('senior')
+# 	return weights
 
 # from sklearn.svm import SVC
 # clf = SVC(kernel="rbf", class_weight=get_weight() )

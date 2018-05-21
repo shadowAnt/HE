@@ -11,8 +11,9 @@ preprocessing part
 faces是训练系数集合，X是其对应的矩阵 1997×99，y是对应的age标签
 facest是测试系数集合，Xt是其对应的矩阵 1996×99，yt是对应的age标签
 '''
-
-faces = [] 
+xxx = 14
+#5 10 14 18
+faces = []
 """ faces is 2000*99 as training images"""
 with open('../faces/faceR', 'r') as fDR:
     for line in fDR:
@@ -27,7 +28,7 @@ with open('../faces/faceDR', 'r') as fDR:
 	for line in fDR:
 		tokens = re.split(r'[( )]', line)
 		try:
-			y.append(tokens[10])
+			y.append(tokens[xxx])
 		except:
 			#print tokens 
 			wrong.append(i)
@@ -59,7 +60,8 @@ with open('../faces/faceDS', 'r') as fDR:
 	for line in fDR:
 		tokens = re.split(r'[( )]',line)
 		try:
-			yt.append(tokens[10])
+			yt.append(tokens[xxx])
+			#5 10 14 18
 			#print y
 		except:
 			wrong.append(i)
@@ -84,15 +86,22 @@ from sklearn.neighbors import KNeighborsClassifier
 
 k_range = range(1, 31)
 k_score = []
+sex = []
+age = []
+race = []
+face = []
 for k in k_range:
 	neigh = KNeighborsClassifier(n_neighbors = k)
 	neigh.fit(X, y)
 	pred = neigh.predict(Xt)
 	# print(classification_report(yt, pred))
 	accuracy = neigh.score(Xt, yt)
-	print(k, "KNN accuracy",  accuracy*100 , "%")
-	k_score.append(accuracy*100)
 
+	print(k, accuracy*100)
+	k_score.append(accuracy*100)
+	sex.append(accuracy*100)
+
+print(sex)
 k_range = list(k_range)
 plt.plot(k_range, k_score, color="blue", linewidth=2.5, linestyle="-", label="cosine")
 plt.xlabel('value of K for KNN')

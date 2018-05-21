@@ -103,8 +103,9 @@ class Alice:
             F = pow(compute_poly(f, i, self.G), self.privkey.d, self.pubkey.n)
             G.append((F * bytes_to_int(self.M[i])) % self.pubkey.n)
 
-        write_json(file_name, G)
+        # write_json(file_name, G)
         print("G has been published.")
+        return G
 
 class Bob:
     def __init__(self, des_messages):
@@ -132,9 +133,8 @@ class Bob:
         write_json(file_name, string_f)
         print("Polynomial published.")
 
-    def receive(self, alice_file_name = "alice_dec.json"):
-        alice = read_json(alice_file_name)
-        G = alice
+    def receive(self, G):
+
 
         decrypted = []
         for j in range(self.num_des_messages):
@@ -191,9 +191,9 @@ if __name__ == "__main__":
     time2 = time.time()
     bob.setup()
     time3 = time.time()
-    alice.transmit()
+    G = alice.transmit()
     time4 = time.time()
-    M_prime = bob.receive()
+    M_prime = bob.receive(G)
     time5 = time.time()
     print(M_prime)
     print('sever.setup():  ', (time2-time1)*1000.0, 'ms')

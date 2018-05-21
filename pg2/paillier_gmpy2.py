@@ -31,6 +31,7 @@ def encrypt(pub, plain):
         if r > 0 and r < pub.n and gcd(r, pub.n) == 1:
             break
     x = powmod(r, pub.n, pub.n_sq)
+
     cipher = (powmod(pub.g, plain, pub.n_sq) * x) % pub.n_sq
     return cipher
 

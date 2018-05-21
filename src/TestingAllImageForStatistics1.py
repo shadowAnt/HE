@@ -62,13 +62,7 @@ print(nb_gender, nb_age, nb_race, nb_impression)
 print(nb_gender*1.0/total, nb_age*1.0/total, nb_race*1.0/total, nb_impression*1.0/total)
 
 """
-classification time: 360.556 s
-15
-1996
-1220 1633 1699 1042
-0.6112224448897795 0.8181362725450901 0.8512024048096193 0.5220440881763527
-
-classification time: 170.02 s
+classification time: 106.709 s
 15
 1996
 1220 1633 1699 1042
